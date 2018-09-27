@@ -12,5 +12,4 @@ def login_action(requests):
 
 		if username == " " or password =="":
 			return render(requests,"index.html",{'error':'用户名或者密码错误'})
-		
-
+		if
