@@ -21,4 +21,7 @@ def login_action(requests):
 			return render(requests,"project_manage.html")
 		else:
 			return render(requests,'index.html',{'error':'用户名或者密码错误'})
+
+	else:
+		return render(requests,'index.html')
 		
