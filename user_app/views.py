@@ -24,4 +24,8 @@ def login_action(requests):
 
 	else:
 		return render(requests,'index.html')
+
+def logout(requests):
+	auth.logout(requests)
+	return render(requests,'index.html')
 		
