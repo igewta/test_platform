@@ -29,10 +29,11 @@ def login_action(requests):
 	else:
 		return render(requests,'index.html')
 
-
+# @login_required
 def project_manage(requests):
 	return render(requests,'project_manage.html')
 
+# @login_required
 def module_manage(requests):
 	return render(requests,'module_manage.html')
 
