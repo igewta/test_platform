@@ -20,8 +20,9 @@ def login_action(requests):
 
 		if user is not None:
 			auth.login(requests,user)
+			requests.session['user'] = username
 			response = HttpResponseRedirect('/project_manage/')
-
+			# response.set_cookie('user',username)
 			return response
 		else:
 			return render(requests,'index.html',{'error':'用户名或者密码错误'})
@@ -31,7 +32,9 @@ def login_action(requests):
 
 # @login_required
 def project_manage(requests):
-	return render(requests,'project_manage.html')
+	# username = requests.COOKIES.get('user')
+	username = requests.session.get('user','')
+	return render(requests,'project_manage.html',{'user':username})
 
 # @login_required
 def module_manage(requests):
