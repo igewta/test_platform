@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
+    <meta charset="UTF-8">
     <title>测试开发平台管理页</title>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://v3.bootcss.com/assets/js/vendor/holder.min.js"></script>
@@ -56,43 +57,37 @@
         </div>
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">项目列表</h2>
+        <a href='/project/create/'>创建项目</a>
+        <p style="color:red">{{ message }}</p>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
                 <tr>
                   <th>id</th>
-                  <th>名称</th>
-                  <th>描述</th>
+                  <th>项目名称</th>
+                  <th>项目描述</th>
                   <th>状态</th>
                   <th>时间</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
+                {% for project in projects %}
                 <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
+                  <td>{{ project.id }}</td>
+                  <td>{{ project.name }}</td>
+                  <td>{{ project.description }}</td>
+                  <td>{{ project.status }}</td>          
+                  <td>{{ project.create_time}}</td>
+                  <td>编辑  删除</td>
                 </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
         </div>
       </div>
-    </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    </div> 
   </body>
 </html>
 

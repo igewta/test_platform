@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
   <head>
-    <meta charset="UTF-8">
     <title>测试开发平台管理页</title>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://v3.bootcss.com/assets/js/vendor/holder.min.js"></script>
@@ -27,7 +26,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">{{user}}</a></li>
+            <li><a href="#"> {{ user }}</a></li>
             <li><a href="#">设置</a></li>
             <li><a href="/logout/">退出</a></li>
           </ul>
@@ -42,12 +41,12 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="/project_manage/">项目管理</a></li>
-            <li class="active"><a href="">模块管理</a></li>
+            <li class="active"><a href="#">项目管理</a></li>
+            <li><a href="/module_manage/">模块管理</a></li>
             <li><a href="#"></a></li>
           </ul>
-          <ul  class="nav nav-sidebar">
-            <li ><a href="">用例管理</a></li>
+          <ul class="nav nav-sidebar">
+            <li><a href="">用例管理</a></li>
             <li><a href="">任务管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -56,33 +55,14 @@
           </ul>
         </div>
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">模块管理</h2>
-          <div class="table-responsive">
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>id</th>
-                  <th>模块名称</th>
-                  <th>模块描述</th>
-                  <th>状态</th>
-                  <th>创建时间</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for module in modules %}
-                <tr>
-                  <td>{{ module.id }}</td>
-                  <td>{{ module.name }}</td>
-                  <td>{{ module.description }}</td>
-                  <td>{{ module.status }}</td>
-                  <td>{{ module.create_time }}</td>
-                  <td>编辑  删除</td>
-                </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
+        <h2 class="sub-header">创建新项目</h2>
+           <form action="/project/save/" method="post">
+              项目名称：<input name="projectname" type="text"  placeholder="请输入项目名称"><br>
+              项目描述：<input name="description" type="text"  placeholder="请输入项目内容"><br>
+              <p style="color:red">{{ error }}</p> <br>
+              {% csrf_token %}
+              <button type="submit">保存</button>
+           </form>
         </div>
       </div>
     </div>
