@@ -1,14 +1,6 @@
-<html>
-<head>
-	<title>测试开发平台登录页</title>
- 	{% load static %}
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css'%}">
-  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-theme.min.css'%}">
-  <link rel="stylesheet" type="text/css" href="{% static 'js/bootstrap.min.js' %}">
+{% extends 'base.html' %}
+{% block content %}
 
-</head>
-
-<body>
     <div class="container" style="width: 330px;">
       <form class="form-signin" method="post" action="/login_action/">
           <h2 class="form-signin-heading">测试开发平台</h2>
@@ -20,6 +12,5 @@
       </form>
     </div>
 
-</body>
+{% endblock %}
 
-</html>
