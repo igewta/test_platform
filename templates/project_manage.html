@@ -70,7 +70,10 @@
                   <td>{{ project.description }}</td>
                   <td>{{ project.status }}</td>          
                   <td>{{ project.create_time}}</td>
-                  <td>编辑  删除</td>
+                  <td>
+                    <a href="/project/edit/{{ project.id }}/">编辑</a>
+                    <a href="/project/del/{{project.id }}/">删除</a>
+                  </td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -85,8 +88,26 @@
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">添加项目</h2>          
           <div class="table-responsive">
-            添加项目，暂未开发
+            <form action="/project/add/" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+            <input type="submit" value="创建">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div> 
+    {% endif %}
 
+    {% if type == 'edit' %}
+    <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+        <h2 class="sub-header">编辑项目项目</h2>          
+          <div class="table-responsive">
+            <form action="/project/edit/{{ pid }}/" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+            <input type="submit" value="保存">
+            </form>
           </div>
         </div>
       </div>
