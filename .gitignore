@@ -3,4 +3,4 @@
 *.log
 .vscode/
 .DS_Store
-*.sqlites3
+*.sqlite3
