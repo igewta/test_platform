@@ -30,8 +30,8 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/project/manage/">项目管理</a></li>
-            <li><a href="/module_manage/">模块管理</a></li>
+            <li class="active"><a href="/manage/project/">项目管理</a></li>
+            <li><a href="/manage/module/">模块管理</a></li>
             <li><a href="#"></a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -47,7 +47,7 @@
     {% if type == 'list' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">项目列表
-          <button  type='button' style='float:right' onclick="window.location.href='/project/add/'">创建</button>
+          <button  type='button' style='float:right' onclick="window.location.href='add/'">创建</button>
         </h2>
           
           <div class="table-responsive">
@@ -71,8 +71,8 @@
                   <td>{{ project.status }}</td>          
                   <td>{{ project.create_time}}</td>
                   <td>
-                    <a href="/project/edit/{{ project.id }}/">编辑</a>
-                    <a href="/project/del/{{project.id }}/">删除</a>
+                    <a href="edit/{{ project.id }}/">编辑</a>
+                    <a href="del/{{ project.id }}/">删除</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -88,10 +88,12 @@
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">添加项目</h2>          
           <div class="table-responsive">
-            <form action="/project/add/" method="post">
+            <form action="/manage/project/add/" method="post">
               {% csrf_token %}
               {{ form.as_p }}
-            <input type="submit" value="创建">
+            <a class="btn btn-default" href="/manage/project/">取消</a>
+            <input class="btn btn-default" type="submit" value="创建">
+
             </form>
           </div>
         </div>
@@ -101,12 +103,13 @@
 
     {% if type == 'edit' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">编辑项目项目</h2>          
+        <h2 class="sub-header">编辑项目</h2>          
           <div class="table-responsive">
-            <form action="/project/edit/{{ pid }}/" method="post">
+            <form action="/manage/project/edit/{{ pid }}/" method="post">
               {% csrf_token %}
               {{ form.as_p }}
-            <input type="submit" value="保存">
+            <a class="btn btn-default" href="/manage/project/">取消</a>
+            <input class="btn btn-default" type="submit" value="保存">
             </form>
           </div>
         </div>

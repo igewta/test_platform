@@ -12,7 +12,7 @@ def project_manage(requests):
 	username = requests.session.get('user','')
 	project_all = project.objects.all()
 	print(project_all)
-	return render(requests,'project_manage.html',{'user':username,'projects':project_all,'type':'list'})
+	return render(requests,'project.html',{'user':username,'projects':project_all,'type':'list'})
 
 
 @login_required
@@ -24,10 +24,10 @@ def add_project(requests):
 			description = form.cleaned_data['description']
 			status = form.cleaned_data['status']
 			project.objects.create(name=name,description=description,status=status)
-			return HttpResponseRedirect('/project/manage/')			
+			return HttpResponseRedirect('/manage/project/')			
 	else:
 		form = projectForm()
-	return render(requests,'project_manage.html',{"form":form,'type':'add'})
+	return render(requests,'project.html',{"form":form,'type':'add'})
 
 
 @login_required
@@ -45,17 +45,17 @@ def edit_project(requests,pid):
 			ob.description = description
 			ob.status = status
 			ob.save()
-			return HttpResponseRedirect('/project/manage/')
+			return HttpResponseRedirect('/manage/project/')
 	else:		
 		name = ob.name
 		description = ob.description
 		status = ob.status
 		form = projectForm(initial={'name': name,'description':description,'status':status})
-		return render(requests,'project_manage.html',{'form':form,'pid':id,'type':'edit'})
+		return render(requests,'project.html',{'form':form,'pid':id,'type':'edit'})
 
 
 @login_required
 def del_project(requests,pid):
 	id = pid
 	project.objects.get(id=id).delete()
-	return HttpResponseRedirect('/project/manage/')
+	return HttpResponseRedirect('/manage/project/')

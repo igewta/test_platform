@@ -23,7 +23,7 @@ def login_action(requests):
 		if user is not None:
 			auth.login(requests,user)
 			requests.session['user'] = username
-			response = HttpResponseRedirect('/project/manage/')
+			response = HttpResponseRedirect('/manage/project/')
 			# response.set_cookie('user',username)
 			return response
 		else:
