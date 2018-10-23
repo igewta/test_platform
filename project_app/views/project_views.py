@@ -50,7 +50,7 @@ def edit_project(requests,pid):
 		description = ob.description
 		status = ob.status
 		form = projectForm(initial={'name': name,'description':description,'status':status})
-		return render(requests,'project.html',{'form':form,'pid':id,'type':'edit'})
+		return render(requests,'project.html',{'form':form,'pid':pid,'type':'edit'})
 
 
 @login_required
