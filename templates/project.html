@@ -54,7 +54,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>id</th>
+                  <th>序号</th>
                   <th>项目名称</th>
                   <th>项目描述</th>
                   <th>状态</th>
@@ -65,7 +65,7 @@
               <tbody>
                 {% for project in projects %}
                 <tr>
-                  <td>{{ project.id }}</td>
+                  <td>{{ forloop.counter }}</td>
                   <td>{{ project.name }}</td>
                   <td>{{ project.description }}</td>
                   <td>{{ project.status }}</td>          

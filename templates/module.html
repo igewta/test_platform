@@ -54,7 +54,7 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>id</th>
+                  <th>序号</th>
                   <th>模块名称</th>
                   <th>模块描述</th>
                   <th>所属项目</th>
@@ -65,7 +65,7 @@
               <tbody>
                 {% for module in modules %}
                 <tr>
-                  <td>{{ module.id }}</td>
+                  <td>{{ forloop.counter }}</td>
                   <td>{{ module.name }}</td>
                   <td>{{ module.description }}</td>
                   <td>{{ module.project }}</td>          
