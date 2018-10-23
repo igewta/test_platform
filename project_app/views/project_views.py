@@ -32,7 +32,6 @@ def add_project(requests):
 
 @login_required
 def edit_project(requests,pid):
-	id = pid
 	ob = project.objects.get(id=pid)
 
 	if requests.method == 'POST':
@@ -56,6 +55,5 @@ def edit_project(requests,pid):
 
 @login_required
 def del_project(requests,pid):
-	id = pid
-	project.objects.get(id=id).delete()
+	project.objects.get(id=pid).delete()
 	return HttpResponseRedirect('/manage/project/')
