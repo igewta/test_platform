@@ -82,7 +82,7 @@ class ProjectTest(StaticLiveServerTestCase):
 		self.assertEqual(pro,'project01')
 
 	def test_02_add_project(self):
-		'''测试添加 project '''
+		'''测试 添加 project '''
 		self.driver.find_element_by_xpath('//button[contains(text(),"创建")]').click()
 		self.driver.find_element_by_name('name').send_keys('project02')
 		self.driver.find_element_by_name('description').send_keys('testproject02')
@@ -94,7 +94,7 @@ class ProjectTest(StaticLiveServerTestCase):
 		self.assertIn('testproject02',pro_d)
 
 	def test_03_edit_project(self):
-		'''测试编辑project'''
+		'''测试 编辑project'''
 		self.driver.find_element_by_xpath('//td/a[contains(text(),"编辑")]').click()
 		self.driver.find_element_by_name('name').clear()
 		self.driver.find_element_by_name('name').send_keys('newproject01')
@@ -108,7 +108,7 @@ class ProjectTest(StaticLiveServerTestCase):
 		self.assertIn('newproject01description',pro_d)
 
 	def test_04_del_project(self):
-		'''测试删除project'''
+		'''测试 删除project'''
 		self.driver.find_element_by_xpath('//td/a[contains(text(),"删除")]').click()
 		table = self.driver.find_element_by_id('prlist')
 		pro = table.find_elements_by_xpath('tbody/tr')
@@ -116,7 +116,7 @@ class ProjectTest(StaticLiveServerTestCase):
 
 
 class ModuleTest(StaticLiveServerTestCase):
-	'''项目管理测试'''
+	'''模块管理测试'''
 
 	@classmethod
 	def setUpClass(cls):
@@ -174,7 +174,7 @@ class ModuleTest(StaticLiveServerTestCase):
 		self.assertIn('newmodule01description',pro_d)
 
 	def test_04_del_module(self):
-		'''测试删除module'''
+		'''测试 删除module'''
 		self.driver.find_element_by_xpath('//td/a[contains(text(),"删除")]').click()
 		table = self.driver.find_element_by_id('molist')
 		pro = table.find_elements_by_xpath('tbody/tr')
