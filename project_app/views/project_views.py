@@ -11,7 +11,6 @@ def project_manage(requests):
 	# username = requests.COOKIES.get('user')
 	username = requests.session.get('user','')
 	project_all = project.objects.all()
-	print(project_all)
 	return render(requests,'project.html',{'user':username,'projects':project_all,'type':'list'})
 
 
