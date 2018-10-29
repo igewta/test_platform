@@ -11,7 +11,6 @@ def project_manage(requests):
 	# username = requests.COOKIES.get('user')
 	username = requests.session.get('user','')
 	project_all = project.objects.all()
-	print(project_all)
 	return render(requests,'project.html',{'user':username,'projects':project_all,'type':'list'})
 
 
@@ -50,7 +49,7 @@ def edit_project(requests,pid):
 		description = ob.description
 		status = ob.status
 		form = projectForm(initial={'name': name,'description':description,'status':status})
-		return render(requests,'project.html',{'form':form,'pid':id,'type':'edit'})
+		return render(requests,'project.html',{'form':form,'pid':pid,'type':'edit'})
 
 
 @login_required
