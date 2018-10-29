@@ -14,6 +14,7 @@ class LoginTest(StaticLiveServerTestCase):
 		cls.driver = webdriver.Chrome()
 		cls.driver.implicitly_wait(10)
 		cls.driver.get('%s%s' % (cls.live_server_url, '/'))
+		cls.driver.maximize_window()
 
 	@classmethod
 	def tearDownClass(cls):
@@ -69,6 +70,7 @@ class ProjectTest(StaticLiveServerTestCase):
 		User.objects.create_user(username='test01',password='test123456',email='test01@mail.com')
 		project.objects.create(name='project01',description='testproject01')
 		self.driver.get('%s%s' % (self.live_server_url, '/manage/project/'))
+		self.driver.maximize_window()
 		self.driver.find_element_by_name('username').send_keys('test01')
 		self.driver.find_element_by_name('password').send_keys('test123456')
 		self.driver.find_element_by_xpath('//button[@type="submit"]').click()
@@ -134,6 +136,7 @@ class ModuleTest(StaticLiveServerTestCase):
 		project.objects.create(id=1,name='project01',description='testproject01')
 		module.objects.create(project_id=1,name='module01',description='testmodule01')
 		self.driver.get('%s%s' % (self.live_server_url, '/'))
+		self.driver.maximize_window()
 		self.driver.find_element_by_name('username').send_keys('test01')
 		self.driver.find_element_by_name('password').send_keys('test123456')
 		self.driver.find_element_by_xpath('//button[@type="submit"]').click()
