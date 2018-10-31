@@ -17,7 +17,7 @@ class module(models.Model):
 	'''
 	模块表
 	'''
-	project = models.ForeignKey(project,on_delete=True)
+	project = models.ForeignKey(project,on_delete=models.CASCADE)
 	name = models.CharField('模块名称',max_length=50,default='')
 	description = models.TextField('模块表述',default='')
 	create_time = models.DateTimeField('创建时间',auto_now=True)
