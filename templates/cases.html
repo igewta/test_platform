@@ -30,12 +30,12 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="/manage/project/">项目管理</a></li>
-            <li class="active"><a href="/manage/module/">模块管理</a></li>
+            <li ><a href="/manage/project/">项目管理</a></li>
+            <li><a href="/manage/module/">模块管理</a></li>
             <li><a href="#"></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="/cases/">用例管理</a></li>
+            <li class="active" ><a href="#">用例管理</a></li>
             <li><a href="">任务管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -46,33 +46,33 @@
 
     {% if type == 'list' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">模块列表
-          <button  type='button' style='float:right' onclick="window.location.href='add/'">创建</button>
+        <h2 class="sub-header">用例列表
+          <button  type='button' style='float:right' onclick="window.location.href='debug/'">调试</button>
         </h2>
           
           <div class="table-responsive">
-            <table id='molist' class="table table-striped">
+            <table id='prlist'  class="table table-striped">
               <thead>
                 <tr>
                   <th>序号</th>
-                  <th>模块名称</th>
-                  <th>模块描述</th>
-                  <th>所属项目</th>
-                  <th>创建时间</th>
+                  <th>用例名称</th>
+                  <th>项用例描述</th>
+                  <th>状态</th>
+                  <th>时间</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                {% for module in modules %}
+                {% for project in projects %}
                 <tr>
                   <td>{{ forloop.counter }}</td>
-                  <td>{{ module.name }}</td>
-                  <td>{{ module.description }}</td>
-                  <td>{{ module.project }}</td>          
-                  <td>{{ module.create_time}}</td>
+                  <td>{{ project.name }}</td>
+                  <td>{{ project.description }}</td>
+                  <td>{{ project.status }}</td>          
+                  <td>{{ project.create_time}}</td>
                   <td>
-                    <a href="edit/{{ module.id }}/">编辑</a>
-                    <a href="del/{{  module.id }}/">删除</a>
+                    <a href="edit/{{ project.id }}/">编辑</a>
+                    <a href="del/{{ project.id }}/">删除</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -86,13 +86,14 @@
 
     {% if type == 'add' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">添加模块</h2>          
+        <h2 class="sub-header">添加项目</h2>          
           <div class="table-responsive">
-            <form action="/manage/module/add/" method="post">
+            <form action="/manage/project/add/" method="post">
               {% csrf_token %}
               {{ form.as_p }}
-            <a class="btn btn-default" href="/manage/module/">取消</a>
+            <a class="btn btn-default" href="/manage/project/">取消</a>
             <input class="btn btn-default" type="submit" value="创建">
+
             </form>
           </div>
         </div>
@@ -102,12 +103,12 @@
 
     {% if type == 'edit' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">编辑模块</h2>          
+        <h2 class="sub-header">编辑项目</h2>          
           <div class="table-responsive">
-            <form action="/manage/module/edit/{{ mid }}/" method="post">
+            <form action="/manage/project/edit/{{ pid }}/" method="post">
               {% csrf_token %}
               {{ form.as_p }}
-             <a class="btn btn-default" href="/manage/module/">取消</a>
+            <a class="btn btn-default" href="/manage/project/">取消</a>
             <input class="btn btn-default" type="submit" value="保存">
             </form>
           </div>
@@ -115,6 +116,13 @@
       </div>
     </div> 
     {% endif %}
+
+     {% if type == 'debug' %}
+     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
+        <h2 class="sub-header">接口调试</h2>
+        {% block debug %}
+        {% endblock %}     
+      {% endif %}
 
 {% endblock %}
 
