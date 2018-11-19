@@ -5,7 +5,24 @@
     <fieldset>
         <div style="width:80%; margin-left: 20px;">
         <form action="/debug/" method="get" class="bs-example bs-example-form" role="form" style="margin-top: 30px">
-        
+             <div class="input-group">
+                <span class="input-group-addon">所属项目</span>
+                 <select id='project' class="input-xlarge">
+                    <option>----</option>
+                     {% for p in projects %}
+                    <option value="{{p.id}}">{{p.name}}</option>
+                    {% endfor%}
+                  </select>
+            </div>
+            <br>
+             <div class="input-group">
+                <span class="input-group-addon">所属模块</span>
+                 <select id='module' class="input-xlarge">
+                    <option>----</option>
+                  </select>
+            </div>
+            <br>
+
             <div class="input-group">
                 <span class="input-group-addon">名称</span>
                 <input id="req_name" type="text" class="form-control" placeholder="name">
@@ -69,6 +86,24 @@
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+  $("#project").change(function(){
+    let project = $(this).val();
+    $.post('/cases/debug/',{
+        'get_project':project,
+    },
+    function(modules){
+        let module = modules
+        let option = document.createElement("option");
+        let project_sel = $("#project") ;
+        for(var i=0;i<module.length;i++){  
+            option.text= module.name;    
+            option.value= module.id;    
+            project_sel.add(option); 
+    }
+
+    });
+  });
+
   $("#send").click(function(){
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();
@@ -96,6 +131,7 @@ $(document).ready(function(){
 
         });
   });
+
 });
 </script>
 

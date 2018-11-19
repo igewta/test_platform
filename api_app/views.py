@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from project_app.models import project,module
 import requests
 import json
 # Create your views here.
@@ -11,15 +12,26 @@ def manage(request):
 
 @login_required
 def debug(request):
-	return render(request,'debug.html',{'type':'debug'})
+	if request.method == 'GET':
+		projects = project.objects.all()
+		return render(request,'debug.html',{'type':'debug','projects':projects})
+	elif request.method == 'POST':
+		print("6666")
+		pid = request.POST.get('get_project')
+		print(pid)
+		if pid :
+			pro = project.objects.get(id=pid)
+			modules = module.objects.filter(project=pro)
+			print(pro,modules)
+			return HttpResponse(modules)
 
 @login_required
 def api_debug(request):
 	if request.method == 'POST':
-		url = request.POST.get("url")
-		method = request.POST.get('method')
-		params = request.POST.get('params')
-		header = request.POST.get('header')
+		url = request.POST.get("url",'')
+		method = request.POST.get('method','get')
+		params = request.POST.get('params','{}')
+		header = request.POST.get('header','{}')
 		datatpye = request.POST.get("datatype")
 
 		if url.startswith('https://') or url.startswith('http://'):
@@ -27,17 +39,17 @@ def api_debug(request):
 		else:
 			return HttpResponse(f'url:{url} 的格式不正确')
 
-		if params != '':
-			try:
-				data = json.loads(params.replace("'", "\""))
-			except :
-				return HttpResponse(f'参数：{params} 不是dict 格式')
 
-		if header != '':
-			try:
-				head_json = json.loads(header.replace("'","\""))
-			except :
-				return HttpResponse(f'header：{header} 不是dict 格式')
+		try:
+			data = json.loads(params.replace("'", "\""))
+		except :
+			return HttpResponse(f'参数：{params} 不是dict 格式')
+
+		
+		try:
+			head_json = json.loads(header.replace("'","\""))
+		except :
+			return HttpResponse(f'header：{header} 不是dict 格式')
 
 		if method == 'get':
 			if params == '' and header == '' :
@@ -71,3 +83,14 @@ def api_debug(request):
 		return HttpResponse(r.content.decode('utf-8'))
 	else:
 		return HttpResponse('404 NOT FOUND')
+
+@login_required
+def save(request):
+	if request.method == 'POST':
+		url = request.POST.get("url",'')
+		method = request.POST.get('method','get')
+		params = request.POST.get('params','{}')
+		header = request.POST.get('header','{}')
+		datatpye = request.POST.get("datatype")
+	else:
+		return HttpResponse("404")
