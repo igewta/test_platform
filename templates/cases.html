@@ -55,24 +55,30 @@
               <thead>
                 <tr>
                   <th>序号</th>
+                  <th>所属项目-模块</th>
                   <th>用例名称</th>
-                  <th>项用例描述</th>
-                  <th>状态</th>
-                  <th>时间</th>
+                  <th>url</th>
+                  <th>请求方法</th>
+                  <th>参数类型</th>
+                  <th>请求头部</th>
+                  <th>请求参数</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                {% for project in projects %}
+                {% for case in cases %}
                 <tr>
                   <td>{{ forloop.counter }}</td>
-                  <td>{{ project.name }}</td>
-                  <td>{{ project.description }}</td>
-                  <td>{{ project.status }}</td>          
-                  <td>{{ project.create_time}}</td>
+                  <td>{{ case.module }}</td>
+                  <td>{{ case.name }}</td>
+                  <td>{{ case.url }}</td>
+                  <td>{{ case.method }}</td> 
+                  <td>{{ case.datatype}}</td>         
+                  <td>{{ case.headers}}</td>
+                  <td>{{ case.params}}</td>
                   <td>
-                    <a href="edit/{{ project.id }}/">编辑</a>
-                    <a href="del/{{ project.id }}/">删除</a>
+                    <a href="edit/{{ case.id }}/">编辑</a>
+                    <a href="del/{{ case.id }}/">删除</a>
                   </td>
                 </tr>
                 {% endfor %}

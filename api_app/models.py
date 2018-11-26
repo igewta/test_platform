@@ -1,10 +1,12 @@
 from django.db import models
+from project_app.models import module
 
 # Create your models here.
 class TestCase(models.Model):
 	'''
 	测试用例表
 	'''
+	module = models.ForeignKey(module, on_delete=models.CASCADE)
 	name = models.CharField('用例名称', max_length=100, blank=False, default='')
 	url = models.TextField('url地址', default='')
 	method = models.CharField('请求方法', max_length=10, default='get')
@@ -12,5 +14,8 @@ class TestCase(models.Model):
 	headers = models.TextField('请求header', default='')
 	params = models.TextField('请求参数',default='')
 	create_time = models.DateTimeField('创建时间', auto_now=True)
+
+	def __str__(self):
+		return self.name
 
 

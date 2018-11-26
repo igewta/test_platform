@@ -5,7 +5,25 @@
     <fieldset>
         <div style="width:80%; margin-left: 20px;">
         <form action="/debug/" method="get" class="bs-example bs-example-form" role="form" style="margin-top: 30px">
-        
+            
+            <div class="form-group" style="height: 20px;">
+                <label>项目：</label>
+                <select id="project_name">
+                    <option value=''>----</option>
+                    {% for p in projects %}
+                    <option value='{{p.id}}'>{{ p.name }}</option>
+                    {% endfor %}
+                </select>
+
+            </div>
+
+            <div class="form-group">
+                <label>模块：</label>
+                <select id="module_name">
+                    <option value=''>----</option>
+                </select>
+            </div>
+
             <div class="input-group">
                 <span class="input-group-addon">名称</span>
                 <input id="req_name" type="text" class="form-control" placeholder="name">
@@ -70,6 +88,27 @@
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
+    $("#project_name").change(function(){
+    let project_name = $("#project_name").val();
+    if (project_name == ''){
+        window.alert('项目不能为空');
+    }
+    $.get("/cases/debug/",
+        {   
+            "project_name":project_name,
+        },
+        function(response){
+            console.log('sssss')
+            let modules = response.data;
+            var option = document.createElement("option");
+            for(var i=0; i< modules.options.length; i++){
+                $("#project_name").options.add(option);
+                option.text = modules[i].name;
+                option.value = modules[i].id;
+                option.obj = obj;
+            } 
+        });
+  });
   $("#send").click(function(){
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();

@@ -4,18 +4,34 @@ from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
 from django.contrib.auth.decorators import login_required
 from api_app.models import TestCase
+from project_app.models import project,module
 
 # Create your views here.
 
 @login_required
 def manage(request):
 	'''用例管理列表'''
-	return render(request,'cases.html',{'type':'list'})
+	cases = TestCase.objects.all()
+	return render(request,'cases.html',{'type':'list','cases':cases})
 
 @login_required
 def debug(request):
 	'''用例调试界面'''
-	return render(request,'debug.html',{'type':'debug'})
+	projects = project.objects.all()
+	project_name = request.GET.get('project_name','')
+	if project_name != '':
+		current_pro = project.objects.get(id=project_name)
+		modules = module.objects.filter(project=current_pro)
+		print('modules',modules)
+		ml = []
+		for m in modules:
+			ml.append(m)
+		module_json = json.loads({'data',ml})
+		print('后台返回的数据',module_json)
+		return JsonResponse(module_json)
+	else:
+		print('未获得project——name')
+		return render(request,'debug.html',{'type':'debug','projects':projects})
 
 @login_required
 def api_debug(request):
@@ -79,7 +95,7 @@ def api_debug(request):
 
 @login_required
 def save(request):
-	'''保存测试用例'''
+	'''保存测试用例''' 
 	if request.method == 'POST':
 		name = request.POST.get('name','')
 		url = request.POST.get("url",'')
