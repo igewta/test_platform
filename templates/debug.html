@@ -5,25 +5,7 @@
     <fieldset>
         <div style="width:80%; margin-left: 20px;">
         <form action="/debug/" method="get" class="bs-example bs-example-form" role="form" style="margin-top: 30px">
-<<<<<<< HEAD
-             <div class="input-group">
-                <span class="input-group-addon">所属项目</span>
-                 <select id='project' class="input-xlarge">
-                    <option>----</option>
-                     {% for p in projects %}
-                    <option value="{{p.id}}">{{p.name}}</option>
-                    {% endfor%}
-                  </select>
-            </div>
-            <br>
-             <div class="input-group">
-                <span class="input-group-addon">所属模块</span>
-                 <select id='module' class="input-xlarge">
-                    <option>----</option>
-                  </select>
-            </div>
-            <br>
-=======
+
             
             <div class="form-group" style="height: 20px;">
                 <label>项目：</label>
@@ -42,7 +24,6 @@
                     <option value=''>----</option>
                 </select>
             </div>
->>>>>>> ea306d952b00295f9d79d5e8328840bacf27a1dd
 
             <div class="input-group">
                 <span class="input-group-addon">名称</span>
@@ -108,53 +89,34 @@
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-<<<<<<< HEAD
-  $("#project").change(function(){
-    let project = $(this).val();
-    $.post('/cases/debug/',{
-        'get_project':project,
+  $("#project_name").change(function(){
+    let project_name = $(this).val();
+    $.get('/cases/debug/',{
+        'get_project':project_name,
     },
     function(modules){
-        let module = modules
+        let module = modules.modulelist
+        console.log(module);
         let option = document.createElement("option");
-        let project_sel = $("#project") ;
-        for(var i=0;i<module.length;i++){  
-            option.text= module.name;    
-            option.value= module.id;    
-            project_sel.add(option); 
+        let module_sel = $("#module_name") ;
+        for(var ml in module){  
+            console.log(ml);
+            $.each(module[ml], function(i, item) {
+                option.text= item;    
+                option.value= i; 
+                console.log("id值",i);  
+                console.log("名称",item);  
+            });
+            module_sel.append(option);    
     }
-
     });
   });
 
-=======
-    $("#project_name").change(function(){
-    let project_name = $("#project_name").val();
-    if (project_name == ''){
-        window.alert('项目不能为空');
-    }
-    $.get("/cases/debug/",
-        {   
-            "project_name":project_name,
-        },
-        function(response){
-            console.log('sssss')
-            let modules = response.data;
-            var option = document.createElement("option");
-            for(var i=0; i< modules.options.length; i++){
-                $("#project_name").options.add(option);
-                option.text = modules[i].name;
-                option.value = modules[i].id;
-                option.obj = obj;
-            } 
-        });
-  });
->>>>>>> ea306d952b00295f9d79d5e8328840bacf27a1dd
   $("#send").click(function(){
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();
     let datatype = $("input[name='req_type']:checked").val();
-    let header = $("#req_header").val()
+    let header = $("#req_header").val();
     let params  = $("#req_parameter").val();
     if (url == ''){
         window.alert('url不能为空');

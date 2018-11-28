@@ -18,17 +18,20 @@ def manage(request):
 def debug(request):
 	'''用例调试界面'''
 	projects = project.objects.all()
-	project_name = request.GET.get('project_name','')
+	project_name = request.GET.get('get_project','')
+	module_dict = {}
 	if project_name != '':
 		current_pro = project.objects.get(id=project_name)
 		modules = module.objects.filter(project=current_pro)
 		print('modules',modules)
-		ml = []
+		module_name = []
 		for m in modules:
-			ml.append(m)
-		module_json = json.loads({'data',ml})
-		print('后台返回的数据',module_json)
-		return JsonResponse(module_json)
+			m_name = {}
+			m_name[m.id] = m.name
+			module_name.append(m_name)
+		module_dict['modulelist'] = module_name
+		print('后台返回的数据',module_dict)
+		return JsonResponse(module_dict)
 	else:
 		print('未获得project——name')
 		return render(request,'debug.html',{'type':'debug','projects':projects})

@@ -13,6 +13,7 @@ class TestCase(models.Model):
 	datatpye = models.CharField('参数形式', max_length=10, default='form')
 	headers = models.TextField('请求header', default='')
 	params = models.TextField('请求参数',default='')
+	result = models.TextField('返回结果',default='')
 	create_time = models.DateTimeField('创建时间', auto_now=True)
 
 	def __str__(self):
