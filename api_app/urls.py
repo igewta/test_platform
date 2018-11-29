@@ -13,6 +13,7 @@ urlpatterns = [
 
 	# cases_api
 	path('caseslist/', case_api.cases_list),
+	path('get_project_list/',case_api.get_project_list),
 	
 	# task_views
 	path('task/', task_views.task_manage),
