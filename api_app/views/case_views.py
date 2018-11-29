@@ -1,10 +1,9 @@
 import requests
-import json
 from django.shortcuts import render
-from django.http import HttpResponse,HttpResponseRedirect,JsonResponse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from api_app.models import TestCase
-from project_app.models import project,module
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 '''
 有关用例的界面显示、操作等
@@ -14,7 +13,20 @@ from project_app.models import project,module
 def manage(request):
 	'''用例管理列表'''
 	cases = TestCase.objects.all()
-	return render(request,'cases.html',{'type':'list','cases':cases})
+	paginator = Paginator(cases,2)
+
+	page = request.GET.get('page')
+	try:
+		contacts = paginator.page(page)
+	except PageNotAnInteger:
+		contacts = paginator.page(1)
+	except EmptyPage:
+		contacts = paginator.page(paginator.num_pages)
+
+	if request.method == 'GET':
+		return render(request,'cases.html',{'type':'list','cases':contacts})
+	else:
+		return HttpResponse('404 NOT FOUND')
 
 @login_required
 def debug(request):

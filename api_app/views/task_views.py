@@ -24,7 +24,6 @@ def task_manage(request):
 @login_required
 def task_add(request):
 	if request.method == 'GET':
-		tasks = TestTask.objects.all()
-		return render(request,'task_manage.html',{'type':'add','tasks':tasks})
+		return render(request,'task_add.html',{'type':'add'})
 	else:
 		return HttpResponse('404 NOT FOUND')

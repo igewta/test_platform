@@ -11,19 +11,18 @@ from project_app.models import project,module
 '''
 
 # 获取用例列表
-@login_required
 def cases_list(request):
-	porjects = project.objects.all()
-	cases_list = []
-
 	if request.method == 'GET':
-		for project in projects:
-			modules = module.objects.filter(project_id=project.id)
-			for module in modules:
-				cases = TestCase.objects.filter(module_id=module.id)
+		projects = project.objects.all()
+		cases_list = []
+
+		for p in projects:
+			modules = module.objects.filter(project_id=p.id)
+			for m in modules:
+				cases = TestCase.objects.filter(module_id=m.id)
 				if len(cases) !=0:
 					for case in cases:
-						case_info = project.name + '-->' + module.name + "-->" + case.name
+						case_info = p.name + '-->' + m.name + "-->" + case.name
 						cases_list.append(case_info)
 				else:
 					pass
