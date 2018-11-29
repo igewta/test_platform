@@ -29,7 +29,6 @@ def manage(request):
 		except:
 			page = 1
 		start = (page-1) * 2
-		print(start)
 		return render(request,'case_manage.html',{'type':'list','cases':contacts,'start':start})
 	else:
 		return HttpResponse('404 NOT FOUND')
@@ -40,7 +39,7 @@ def search(request):
 	case_name = request.GET.get('case_name')
 	cases = TestCase.objects.filter(name__contains=case_name)
 	paginator = Paginator(cases,2)
-	page = request.GET.get('page')
+	page = request.GET.get('page',"1")
 	try:
 		contacts = paginator.page(page)
 	except PageNotAnInteger:
@@ -49,18 +48,23 @@ def search(request):
 		contacts = paginator.page(paginator.num_pages)
 
 	if request.method == 'GET':
-		return render(request,'case_manage.html',{'type':'list','cases':contacts,'case_name':case_name})
+		try:
+			page = int(page)
+		except:
+			page = 1
+		start = (page-1) * 2
+		return render(request,'case_manage.html',{'type':'list','cases':contacts,'case_name':case_name,'start':start})
 	else:
 		return HttpResponse('404 NOT FOUND')
 
 @login_required
 def case_add(request):
-	'''用例调试界面'''
+	'''用例添加界面'''
 	return render(request,'case_add.html',{'type':'add'})
 
 @login_required
 def api_debug(request):
-	'''新建并调试用例'''
+	'''调试用例'''
 	if request.method == 'POST':
 		url = request.POST.get("url",'')
 		method = request.POST.get('method','')
