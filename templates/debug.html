@@ -100,14 +100,15 @@ $(document).ready(function(){
         let option = document.createElement("option");
         let module_sel = $("#module_name") ;
         for(var ml in module){  
-            console.log(ml);
+            console.log(module[ml]);
             $.each(module[ml], function(i, item) {
                 option.text= item;    
                 option.value= i; 
                 console.log("id值",i);  
-                console.log("名称",item);  
+                console.log("名称",item); 
+                module_sel.append(option);  
             });
-            module_sel.append(option);    
+               
     }
     });
   });

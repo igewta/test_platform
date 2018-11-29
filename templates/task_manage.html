@@ -35,8 +35,8 @@
             <li><a href="#"></a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li class="active" ><a href="#">用例管理</a></li>
-            <li><a href="/cases/task/">任务管理</a></li>
+            <li  ><a href="/cases/">用例管理</a></li>
+            <li class="active"><a href="#">任务管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href=""></a></li>
@@ -46,8 +46,8 @@
 
     {% if type == 'list' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">用例列表
-          <button  type='button' style='float:right' onclick="window.location.href='debug/'">调试</button>
+        <h2 class="sub-header">任务列表
+          <button  type='button' style='float:right' onclick="window.location.href='add/'">创建</button>
         </h2>
           
           <div class="table-responsive">
@@ -55,27 +55,21 @@
               <thead>
                 <tr>
                   <th>序号</th>
-                  <th>所属项目-模块</th>
-                  <th>用例名称</th>
-                  <th>url</th>
-                  <th>请求方法</th>
-                  <th>参数类型</th>
-                  <th>请求头部</th>
-                  <th>请求参数</th>
+                  <th>任务名称</th>
+                  <th>任务描述</th>
+                  <th>状态</th>
+                  <th>包含用例</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
-                {% for case in cases %}
+                {% for task in tasks %}
                 <tr>
                   <td>{{ forloop.counter }}</td>
-                  <td>{{ case.module }}</td>
-                  <td>{{ case.name }}</td>
-                  <td>{{ case.url }}</td>
-                  <td>{{ case.method }}</td> 
-                  <td>{{ case.datatype}}</td>         
-                  <td>{{ case.headers}}</td>
-                  <td>{{ case.params}}</td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.describe }}</td>
+                  <td>{{ task.status }}</td>
+                  <td>{{ task.cases }}</td> 
                   <td>
                     <a href="edit/{{ case.id }}/">编辑</a>
                     <a href="del/{{ case.id }}/">删除</a>
@@ -123,12 +117,6 @@
     </div> 
     {% endif %}
 
-     {% if type == 'debug' %}
-     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">接口调试</h2>
-        {% block debug %}
-        {% endblock %}     
-      {% endif %}
 
 {% endblock %}
 

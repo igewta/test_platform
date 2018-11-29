@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 from api_app.models import TestCase
 from project_app.models import project,module
 
-# Create your views here.
+'''
+有关用例的界面显示、操作等
+'''
 
 @login_required
 def manage(request):
