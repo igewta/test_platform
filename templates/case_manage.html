@@ -47,9 +47,16 @@
     {% if type == 'list' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">用例列表
-          <button  type='button' style='float:right' onclick="window.location.href='debug/'">调试</button>
+          <button  type='button' style='float:right' onclick="window.location.href='/cases/add/'">创建</button>
         </h2>
           
+          <form class="navbar-form" method="get" action="/cases/search/">
+              <div class="form-group">
+                  <input name="case_name" type="text" placeholder="用例名称" class="form-control">
+              </div>
+              <button type="submit" class="btn btn-success">搜索</button>
+          </form>
+
           <div class="table-responsive">
             <table id='prlist'  class="table table-striped">
               <thead>
@@ -68,7 +75,7 @@
               <tbody>
                 {% for case in cases %}
                 <tr>
-                  <td>{{ forloop.counter }}</td>
+                  <td>{{ forloop.counter|add:start }}</td>
                   <td>{{ case.module }}</td>
                   <td>{{ case.name }}</td>
                   <td>{{ case.url }}</td>
@@ -116,24 +123,6 @@
 
     {% endif %}
 
-
-    {% if type == 'add' %}
-    <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">添加项目</h2>          
-          <div class="table-responsive">
-            <form action="/manage/project/add/" method="post">
-              {% csrf_token %}
-              {{ form.as_p }}
-            <a class="btn btn-default" href="/manage/project/">取消</a>
-            <input class="btn btn-default" type="submit" value="创建">
-
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> 
-    {% endif %}
-
     {% if type == 'edit' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">编辑项目</h2>          
@@ -150,10 +139,10 @@
     </div> 
     {% endif %}
 
-     {% if type == 'debug' %}
+     {% if type == 'add' %}
      <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
         <h2 class="sub-header">接口调试</h2>
-        {% block debug %}
+        {% block add %}
         {% endblock %}     
       {% endif %}
 

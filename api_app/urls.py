@@ -7,9 +7,9 @@ from api_app.views import task_views
 urlpatterns = [
 	# cases_views
     path('', case_views.manage),
-	path('debug/', case_views.debug),
+	path('add/', case_views.case_add),
 	path('api_debug/',case_views.api_debug),
-	path('save/',case_views.save),
+	path('search/',case_views.search),
 
 	# cases_api
 	path('caseslist/', case_api.cases_list),

@@ -1,5 +1,5 @@
-{% extends  'cases.html' %}
-{% block debug %}
+{% extends  'case_manage.html' %}
+{% block add %}
 
 <form class="form-horizontal">
     <fieldset>
@@ -89,30 +89,6 @@
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-  $("#project_name").change(function(){
-    let project_name = $(this).val();
-    $.get('/cases/debug/',{
-        'get_project':project_name,
-    },
-    function(modules){
-        let module = modules.modulelist
-        console.log(module);
-        let option = document.createElement("option");
-        let module_sel = $("#module_name") ;
-        for(var ml in module){  
-            console.log(module[ml]);
-            $.each(module[ml], function(i, item) {
-                option.text= item;    
-                option.value= i; 
-                console.log("id值",i);  
-                console.log("名称",item); 
-                module_sel.append(option);  
-            });
-               
-    }
-    });
-  });
-
   $("#send").click(function(){
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();

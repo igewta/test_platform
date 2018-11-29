@@ -15,6 +15,31 @@ def manage(request):
 	cases = TestCase.objects.all()
 	paginator = Paginator(cases,2)
 
+	page = request.GET.get('page',"1")
+	try:
+		contacts = paginator.page(page)
+	except PageNotAnInteger:
+		contacts = paginator.page(1)
+	except EmptyPage:
+		contacts = paginator.page(paginator.num_pages)
+
+	if request.method == 'GET':
+		try:
+			page = int(page)
+		except:
+			page = 1
+		start = (page-1) * 2
+		print(start)
+		return render(request,'case_manage.html',{'type':'list','cases':contacts,'start':start})
+	else:
+		return HttpResponse('404 NOT FOUND')
+
+@login_required
+def search(request):
+	'''用例搜索'''
+	case_name = request.GET.get('case_name')
+	cases = TestCase.objects.filter(name__contains=case_name)
+	paginator = Paginator(cases,2)
 	page = request.GET.get('page')
 	try:
 		contacts = paginator.page(page)
@@ -24,31 +49,14 @@ def manage(request):
 		contacts = paginator.page(paginator.num_pages)
 
 	if request.method == 'GET':
-		return render(request,'cases.html',{'type':'list','cases':contacts})
+		return render(request,'case_manage.html',{'type':'list','cases':contacts,'case_name':case_name})
 	else:
 		return HttpResponse('404 NOT FOUND')
 
 @login_required
-def debug(request):
+def case_add(request):
 	'''用例调试界面'''
-	projects = project.objects.all()
-	project_name = request.GET.get('get_project','')
-	module_dict = {}
-	if project_name != '':
-		current_pro = project.objects.get(id=project_name)
-		modules = module.objects.filter(project=current_pro)
-		print('modules',modules)
-		module_name = []
-		for m in modules:
-			m_name = {}
-			m_name[m.id] = m.name
-			module_name.append(m_name)
-		module_dict['modulelist'] = module_name
-		print('后台返回的数据',module_dict)
-		return JsonResponse(module_dict)
-	else:
-		print('未获得project——name')
-		return render(request,'debug.html',{'type':'debug','projects':projects})
+	return render(request,'case_add.html',{'type':'add'})
 
 @login_required
 def api_debug(request):
