@@ -1,63 +1,34 @@
-var CaseInit = function (caseid) {
-    var cmbProject = document.getElementById(_cmbProject);
-    var cmbModule = document.getElementById(_cmbModule);
-    var dataList = [];
+var CaseInit = function (caseId) {
 
-    //window.alert(defaultProject);
-    //window.alert(defaultMudle);
-    //设置默认选项
-    function cmbSelect(cmb, str) {
-        for(var i=0; i< cmb.options.length; i++){
-            if(cmb.options[i].value == str){
-                cmb.selectedIndex = i;
-                return;
-            }
-        }
-    }
-    //创建下拉选项
-    function cmbAddOption(cmb, str, obj) {
-        console.log(str);
-        var option = document.createElement("option");
-        cmb.options.add(option);
-        option.innerHTML = str;
-        option.value = str;
-        option.obj = obj;
-    }
-    
-    //改变项目
-    function changeProject() {
-        cmbModule.options.length = 0;
-        //cmbModule.onchange = null;
-        if (cmbProject.selectedIndex == -1) {
-            return;
-        }
-        var item = cmbProject.options[cmbProject.selectedIndex].obj;
-        for (var i = 0; i < item.moduleList.length; i++) {
-            cmbAddOption(cmbModule, item.moduleList[i], null);
-        }
-
-        cmbSelect(cmbModule, defaultModule);
-    }
-
-    function getProjectList(){
-        // 调用项目服务列表接口
-        $.get("/cases/get_project_list/", {}, function (resp) {
+    function getcaseinfo(){
+        // 调用接口信息接口
+        $.post("/cases/cases_info/", {'caseid':caseId}, function (resp) {
             if(resp.success === "true"){
-                dataList = resp.data;
-                //遍历项目
-                for (var i = 0; i < dataList.length; i++) {
-                    cmbAddOption(cmbProject, dataList[i].name, dataList[i]);
+                result = resp.data;
+
+                document.getElementById("req_name").value = result.name;
+                document.getElementById("req_url").value = result.url;
+                document.getElementById("req_header").value = result.headers;
+                document.getElementById("req_parameter").value = result.params;
+                document.getElementById("assert_text").value = result.assertText;
+
+                if (result.reqMethod === "post"){
+                    document.getElementById("post").setAttribute("checked", "")
                 }
 
-                cmbSelect(cmbProject, defaultProject);
-                changeProject();
-                cmbProject.onchange = changeProject;
+                if (result.reqType === "json"){
+                    document.getElementById("json").setAttribute("checked", "")
+                }
+
+                ProjectInit('project_name', 'module_name', result.project_name, result.module_name);
+            }else{
+                window.alert(resp.message);
             }
 
-            cmbSelect(cmbProject, defaultProject);
-            //$("#result").html(resp);
         });
     }
     // 调用getProjectList函数
-    getProjectList(); 
+    getcaseinfo(); 
+
+};
     

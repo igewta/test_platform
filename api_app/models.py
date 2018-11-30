@@ -7,6 +7,7 @@ class TestCase(models.Model):
 	测试用例表
 	'''
 	module = models.ForeignKey(module, on_delete=models.CASCADE)
+	project_name = models.CharField('所属项目', max_length=50, default='')
 	name = models.CharField('用例名称', max_length=100, blank=False, default='')
 	url = models.TextField('url地址', default='')
 	method = models.CharField('请求方法', max_length=10, default='get')

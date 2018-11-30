@@ -51,6 +51,29 @@ def cases_list(request):
 	else:
 		return HttpResponse('404 NOT FOUND')
 
+# 获取用例信息
+def cases_info(request):
+	if request.method == 'POST':
+		cid = request.POST.get('cid','')
+		case = TestCase.objects.get(id=cid)
+		module_obj = module.objects.get(id=case.module_id)
+		project_obj = project.objects.get(id=module_obj.project_id)
+		case_info = {
+		'name' :case.name,
+		'url':case.url,
+		'method' :case.method,
+		'datatpye' :case.datatpye,
+		'headers' : case.headers,
+		'params' : case.params,
+		'result' : case.result,
+		'module_name' : case.module_name,
+		'project_name' : project_obj.name
+		}
+		data = {'success':'true','caseinfo':case_info}
+		return JsonResponse(data)
+	else:
+		return HttpResponse('404 NOT FOUND')
+
 @login_required
 def api_debug(request):
 	'''调试用例'''
@@ -121,12 +144,14 @@ def save(request):
 		params = request.POST.get('params','form')
 		header = request.POST.get('header','')
 		datatpye = request.POST.get("datatype",'')
-		module_name = request.POST.get('module','')
+		module_name = request.POST.get('module_name','')
+		project_name = request.POST.get('project_name','')
+
 		if name == '' or url == '':
 			return HttpResponse('用例名称或请求url不能为空')
 		else:
 			module_obj = module.objects.get(name=module_name)
-			TestCase.objects.create(module=module_obj,name=name, url=url, method=method, params=params,headers=header, datatpye=datatpye)
+			TestCase.objects.create(project_name=project_name,module=module_obj,name=name, url=url, method=method, params=params,headers=header, datatpye=datatpye)
 			return HttpResponse('保存成功')
 
 	else:

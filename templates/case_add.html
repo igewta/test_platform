@@ -124,6 +124,8 @@ $(document).ready(function(){
     let header = $("#req_header").val();
     let params  = $("#req_parameter").val();
     let module_name = $("#module_name").val();
+    let project_name = $("#project_name").val();
+
     if (url == ''){
         window.alert('url不能为空');
     }else if(method == ''){
@@ -143,6 +145,7 @@ $(document).ready(function(){
             "datatype":datatype,
             "params":params,
             'module':module_name,
+            'project_name':project_name,
         },
         function(result){
             $('#result').val(result)
