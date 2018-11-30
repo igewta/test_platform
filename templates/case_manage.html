@@ -84,8 +84,8 @@
                   <td>{{ case.headers}}</td>
                   <td>{{ case.params}}</td>
                   <td>
-                    <a href="edit/{{ case.id }}/">编辑</a>
-                    <a href="del/{{ case.id }}/">删除</a>
+                    <a href="/cases/edit/{{ case.id }}/">编辑</a>
+                    <a href="/cases/delete/{{ case.id }}/">删除</a>
                   </td>
                 </tr>
                 {% endfor %}
@@ -125,23 +125,14 @@
 
     {% if type == 'edit' %}
     <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">编辑项目</h2>          
-          <div class="table-responsive">
-            <form action="/manage/project/edit/{{ pid }}/" method="post">
-              {% csrf_token %}
-              {{ form.as_p }}
-            <a class="btn btn-default" href="/manage/project/">取消</a>
-            <input class="btn btn-default" type="submit" value="保存">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div> 
+        <h2 class="sub-header">编辑用例</h2>
+        {% block edit %}
+        {% endblock %}     
     {% endif %}
 
      {% if type == 'add' %}
      <div class="col-sm-2 col-sm-offset-2 col-md-10 col-md-offset-2 main">
-        <h2 class="sub-header">接口调试</h2>
+        <h2 class="sub-header">创建用例</h2>
         {% block add %}
         {% endblock %}     
       {% endif %}

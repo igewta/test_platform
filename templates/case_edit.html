@@ -1,5 +1,5 @@
 {% extends  'case_manage.html' %}
-{% block add %}
+{% block edit %}
 
 <form class="form-horizontal">
     <fieldset>
@@ -83,6 +83,7 @@
 
     // 初始化项目模块选择框
     ProjectInit('project_name', 'module_name');
+    CaseInit('project_name', 'module_name');
     // 设置header 与 参数输入框默认值
     document.querySelector("#req_header").value="{}";
     document.querySelector("#req_parameter").value="{}";

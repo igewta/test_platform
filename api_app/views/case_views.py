@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from api_app.models import TestCase
+from project_app.models import project,module
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 '''
@@ -63,83 +64,10 @@ def case_add(request):
 	return render(request,'case_add.html',{'type':'add'})
 
 @login_required
-def api_debug(request):
-	'''调试用例'''
-	if request.method == 'POST':
-		url = request.POST.get("url",'')
-		method = request.POST.get('method','')
-		params = request.POST.get('params','')
-		header = request.POST.get('header','')
-		datatpye = request.POST.get("datatype",'')
+def edit(request,cid):
+	'''用例编辑界面'''
+	return render(request,'case_edit.html',{'type':'edit','cid':cid})
 
-		if url.startswith('https://') or url.startswith('http://'):
-			pass 
-		else:
-			return HttpResponse(f'url:{url} 的格式不正确')
-
-		if params != '':
-			try:
-				data = json.loads(params.replace("'", "\""))
-			except :
-				return HttpResponse(f'参数：{params} 不是dict 格式')
-
-		if header != '':
-			try:
-				head_json = json.loads(header.replace("'","\""))
-			except :
-				return HttpResponse(f'header：{header} 不是dict 格式')
-
-		if method == 'get':
-			if params == '' and header == '' :
-				r = requests.get(url)
-			elif params == '' and header != '' :
-				r = requests.get(url, headers=head_json)
-			elif params != '' and header == '':
-				r = requests.get(url, params = data)
-			else:
-				r = requests.get(url, params = data, headers=head_json)
-
-		if method == 'post':
-			if params == '':
-				if header == '' :
-					r = requests.post(url)
-				else:
-					r = requests.post(url, headers=head_json)
-			else:
-				if datatpye == 'form':
-					if header == '':
-						r = requests.post(url, data = data)
-					else:
-						r = requests.post(url, data = data, headers=head_json)
-				if datatpye == 'json':
-					if header == '':
-						r = requests.post(url, json = data)
-					else:
-						r = requests.post(url, json = data, headers=head_json)
-
-		# 必须返回HttpResoponse
-		return HttpResponse(r.content.decode('utf-8'))
-	else:
-		return HttpResponse('404 NOT FOUND')
-
-@login_required
-def save(request):
-	'''保存测试用例''' 
-	if request.method == 'POST':
-		name = request.POST.get('name','')
-		url = request.POST.get("url",'')
-		method = request.POST.get('method','get')
-		params = request.POST.get('params','form')
-		header = request.POST.get('header','')
-		datatpye = request.POST.get("datatype",'')
-		if name == '' or url == '':
-			return HttpResponse('用例名称或请求url不能为空')
-		else:
-			TestCase.objects.create(name=name, url=url, method=method, params=params,headers=header, datatpye=datatpye)
-			return HttpResponse('保存成功')
-
-	else:
-		return HttpResponse('请求方法错误')
 
 
 

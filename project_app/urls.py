@@ -5,7 +5,7 @@ urlpatterns = [
     path('project/', project_views.project_manage),
     path('project/add/',project_views.add_project),
     path('project/edit/<int:pid>/',project_views.edit_project),
-    path('project/del/<int:pid>/',project_views.del_project),
+    path("project/del/<int:pid>/",project_views.del_project),
 
     path('module/', module_views.module_manage),
     path('module/add/',module_views.add_module),
