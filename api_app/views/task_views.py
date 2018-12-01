@@ -16,7 +16,7 @@ from project_app.models import project,module
 def task_manage(request):
 	if request.method == 'GET':
 		tasks = TestTask.objects.all()
-		return render(request,'task_manage.html',{'type':'list','tasks':tasks})
+		return render(request,'api_app/task_manage.html',{'type':'list','tasks':tasks})
 	else:
 		return HttpResponse('404 NOT FOUND')
 
@@ -24,6 +24,6 @@ def task_manage(request):
 @login_required
 def task_add(request):
 	if request.method == 'GET':
-		return render(request,'task_add.html',{'type':'add'})
+		return render(request,'api_app/task_add.html',{'type':'add'})
 	else:
 		return HttpResponse('404 NOT FOUND')

@@ -11,7 +11,7 @@ def module_manage(requests):
 	# username = requests.COOKIES.get('user')
 	username = requests.session.get('user','')
 	module_all = module.objects.all()
-	return render(requests,'module.html',{'user':username,'modules':module_all,'type':'list'})
+	return render(requests,'project_app/module.html',{'user':username,'modules':module_all,'type':'list'})
 
 
 @login_required
@@ -26,7 +26,7 @@ def add_module(requests):
 			return HttpResponseRedirect('/manage/module/')			
 	else:
 		form = moduleForm()
-	return render(requests,'module.html',{"form":form,'type':'add'})
+	return render(requests,'project_app/module.html',{"form":form,'type':'add'})
 
 
 @login_required
@@ -42,7 +42,7 @@ def edit_module(requests,mid):
 			return HttpResponseRedirect('/manage/module/')
 	else:
 		form = moduleForm(instance=ob)
-		return render(requests,'module.html',{'form':form,'mid':mid,'type':'edit'})
+		return render(requests,'project_app/module.html',{'form':form,'mid':mid,'type':'edit'})
 
 @login_required
 def del_module(requests,mid):

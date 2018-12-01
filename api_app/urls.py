@@ -10,13 +10,15 @@ urlpatterns = [
 	path('add/', case_views.case_add),
 	path('search/',case_views.search),
 	path('edit/<int:cid>/',case_views.edit),
+	path('delete/<int:cid>/',case_views.delete),
 
 	# cases_api
 	path('caseslist/', case_api.cases_list),
+	path('cases_info/',case_api.cases_info),
 	path('get_project_list/',case_api.get_project_list),
 	path('api_debug/',case_api.api_debug),
+	path('case_assert/',case_api.case_assert),
 	path('save/',case_api.save),
-	path('delete/<int:cid>/',case_api.delete),
 	path('update/',case_api.update),
 	
 	# task_views

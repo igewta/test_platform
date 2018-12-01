@@ -11,7 +11,7 @@ def project_manage(requests):
 	# username = requests.COOKIES.get('user')
 	username = requests.session.get('user','')
 	project_all = project.objects.all()
-	return render(requests,'project.html',{'user':username,'projects':project_all,'type':'list'})
+	return render(requests,'project_app/project.html',{'user':username,'projects':project_all,'type':'list'})
 
 
 @login_required
@@ -26,7 +26,7 @@ def add_project(requests):
 			return HttpResponseRedirect('/manage/project/')			
 	else:
 		form = projectForm()
-	return render(requests,'project.html',{"form":form,'type':'add'})
+	return render(requests,'project_app/project.html',{"form":form,'type':'add'})
 
 
 @login_required
@@ -49,7 +49,7 @@ def edit_project(requests,pid):
 		description = ob.description
 		status = ob.status
 		form = projectForm(initial={'name': name,'description':description,'status':status})
-		return render(requests,'project.html',{'form':form,'pid':pid,'type':'edit'})
+		return render(requests,'project_app/project.html',{'form':form,'pid':pid,'type':'edit'})
 
 
 @login_required

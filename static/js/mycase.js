@@ -10,7 +10,7 @@ var CaseInit = function (caseId) {
                 document.getElementById("req_url").value = result.url;
                 document.getElementById("req_header").value = result.headers;
                 document.getElementById("req_parameter").value = result.params;
-                document.getElementById("assert_text").value = result.assertText;
+                document.getElementById("assert_text").value = result.result;
 
                 if (result.reqMethod === "post"){
                     document.getElementById("post").setAttribute("checked", "")
@@ -20,7 +20,7 @@ var CaseInit = function (caseId) {
                     document.getElementById("json").setAttribute("checked", "")
                 }
 
-                ProjectInit('project_name', 'module_name', result.project_name, result.module_name);
+                ProjectInit('project_name', 'module_name', result.project_id, result.module_id);
             }else{
                 window.alert(resp.message);
             }

@@ -1,5 +1,5 @@
-{% extends  'case_manage.html' %}
-{% block add %}
+{% extends  'api_app/case_manage.html' %}
+{% block edit %}
 
 <form class="form-horizontal">
     <fieldset>
@@ -60,9 +60,20 @@
                 <input id="req_parameter" type="text" class="form-control">
             </div>
             <p style="color:#8B8989">说明：以字典的方式设置参数，如：{"id":1, "name":"名称"}</p>
+
+            <p>验证数据：</p>
+            <div style="height: 100px">
+                <div style="float: left; width: 90%;">
+                    <textarea id="assert_text" class="form-control" rows="3" name=textarea></textarea>
+                </div>
+                <div style="margin-top: 38px; float: right; width: 10%;">
+                    <button type="button" class="btn btn-default" id="c_assert" style="float: right;margin-right: 10px;">验证</button>
+                </div>
+            </div>
+
             <div style="width: 100%; height: 60px;">
                 <button type="button" class="btn btn-success" id="send" style="float: right;margin-right: 10px;">调试</button>
-                <button type="button" class="btn btn-success" id="save" style="float: right;margin-right: 10px;">保存</button>
+                <button type="button" class="btn btn-success" id="update" style="float: right;margin-right: 10px;">更新</button>
             </div>
         
         </form>
@@ -81,25 +92,32 @@
 <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <script type="text/javascript">
 
-    // 初始化项目模块选择框
-    ProjectInit('project_name', 'module_name');
-    // 设置header 与 参数输入框默认值
-    document.querySelector("#req_header").value="{}";
-    document.querySelector("#req_parameter").value="{}";
+    let url_path = document.location.pathname;
+    let case_id = url_path.split("/")[3];
+    console.log('case_id',case_id)
+
+    CaseInit(case_id);
+    
 
 $(document).ready(function(){
+
+    //调试用例
   $("#send").click(function(){
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();
     let datatype = $("input[name='req_type']:checked").val();
     let header = $("#req_header").val();
     let params  = $("#req_parameter").val();
+    console.log('method',method)
     if (url == ''){
         window.alert('url不能为空');
+        return;
     }else if(method == ''){
         window.alert('请求方法不能为空')
+        return;
     }else if(datatype == ''){
         window.alert('参数类型不能为空')
+        return;
     }
 
     $.post("/cases/api_debug/",
@@ -111,45 +129,95 @@ $(document).ready(function(){
             "params":params
         },
         function(result){
-            $('#result').val(result)
+            if (result.success == 'false'){
+                $('#result').val(result.message)
+            }else{
+                $('#result').val(result.data)
+            }
+            
 
         });
   });
 
-  $("#save").click(function(){
+  //用例断言
+ $("#c_assert").click(function(){
+    let case_assert = $("#assert_text").val();
+    let case_resp = $('#result').val();
+    if (case_assert == ''){
+        window.alert('断言内容不能为空');
+        return;
+    }else if(case_resp == ''){
+        window.alert('用例返回结果不能为空');
+        return;
+    }
+
+    $.post("/cases/case_assert/",
+        {   
+            "case_assert":case_assert,
+            "case_resp":case_resp,
+        },
+        function(result){
+            if (result.success == 'false'){
+               window.alert('断言失败')
+            }else{
+                window.alert('断言成功')
+            }
+            
+
+        });
+  });
+
+  //更新用例
+  $("#update").click(function(){
     let name = $('#req_name').val();
     let url = $("#req_url").val();
     let method = $("input[name='req_method']:checked").val();
     let datatype = $("input[name='req_type']:checked").val();
     let header = $("#req_header").val();
     let params  = $("#req_parameter").val();
-    let module_name = $("#module_name").val();
-    let project_name = $("#project_name").val();
+    let module_id = $("#module_name").val();
+    let project_id = $("#project_name").val();
+    let assert_text = $('#assert_text').val();
 
     if (url == ''){
         window.alert('url不能为空');
+        return;
     }else if(method == ''){
         window.alert('请求方法不能为空')
-    }else if(datatype == ''){
-        window.alert('参数类型不能为空')
+        return;
+    }else if(assert_text == ''){
+        window.alert('断言内容不能为空')
+        return;
     }else if(name == ''){
         window.alert('用例名称不能为空')
+        return;
+    }else if(module_id == ''){
+        window.alert('所属模块不能为空')
+        return;
+    }else if(project_id == ''){
+        window.alert('所属项目不能为空')
+        return;
     }
 
-    $.post("/cases/save/",
-        {
+    $.post("/cases/update/",
+        {   
+            'caseid':case_id,
             'name':name,
             "url":url,
             "method":method,
             "header":header,
             "datatype":datatype,
             "params":params,
-            'module':module_name,
-            'project_name':project_name,
+            'module_id':module_id,
+            'project_id':project_id,
+            'assert_text':assert_text,
         },
-        function(result){
-            $('#result').val(result)
-
+        function(result){ 
+            if (result.success == 'true'){
+               window.alert('更新成功')
+            }else{
+                window.alert(result.message)
+            }
         });
   });
 
