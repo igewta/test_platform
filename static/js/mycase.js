@@ -47,7 +47,8 @@ var CaseListInit = function () {
                 for(let i=0;i<cases.length; i++){
                     let checkBox=document.createElement("input");  
                     checkBox.setAttribute("type","checkbox");  
-                    checkBox.setAttribute("value",cases[i]['cid']); 
+                    checkBox.setAttribute("value",cases[i]['cid']);
+                    checkBox.setAttribute("class",'case_check'); 
                     checkBox.setAttribute("name",'case_check');   
                       
                     let li=document.createElement("li");  
@@ -64,6 +65,7 @@ var CaseListInit = function () {
     }
     // 调用getcaseslist函数
     getcaseslist(); 
+    console.log('执行了Caselistinit')
 
 };
     

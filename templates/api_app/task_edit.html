@@ -47,9 +47,10 @@
 <script type="text/javascript">
     let url_path = document.location.pathname;
     let taskId = url_path.split("/")[4];
-    TaskInit(taskId)
-    
+    TaskInit(taskId);
+
 $(document).ready(function(){
+
     //更新任务
   $("#update").click(function(){
     let task_name = $("#task_name").val();
