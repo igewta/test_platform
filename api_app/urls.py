@@ -2,7 +2,7 @@ from django.urls import path
 from api_app.views import case_views
 from api_app.views import case_api
 from api_app.views import task_views
-
+from api_app.views import task_api
 
 urlpatterns = [
 	# cases_views
@@ -24,4 +24,11 @@ urlpatterns = [
 	# task_views
 	path('task/', task_views.task_manage),
 	path('task/add/', task_views.task_add),
+	path('task/edit/<int:tid>/',task_views.task_edit),
+	path('task/del/<int:tid>/',task_views.task_del),
+
+	# task_api
+	path('task/save/',task_api.task_save),
+	path('task/update/',task_api.task_update),
+	path('task_info/',task_api.task_info),
 ]
