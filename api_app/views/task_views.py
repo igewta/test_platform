@@ -27,3 +27,15 @@ def task_add(request):
 		return render(request,'api_app/task_add.html',{'type':'add'})
 	else:
 		return HttpResponse('404 NOT FOUND')
+
+@login_required
+def task_edit(request,tid):
+	'''任务编辑界面'''
+	task_obj = TestTask.objects.get(id=tid)
+	return render(request,'api_app/task_edit.html',{'type':'edit','task_obj':task_obj})
+
+@login_required
+def task_del(request,tid):
+	'''删除任务''' 
+	TestTask.objects.get(id=tid).delete()
+	return HttpResponseRedirect('/cases/task/')

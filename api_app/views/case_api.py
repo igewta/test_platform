@@ -43,10 +43,10 @@ def cases_list(request):
 				if len(cases) !=0:
 					for case in cases:
 						case_info = p.name + '-->' + m.name + "-->" + case.name
-						cases_list.append(case_info)
-				else:
-					pass
+						case_obj = {'cid':case.id,'c_name':case_info}
+						cases_list.append(case_obj)
 		data = {'caseslist':cases_list}
+		print(data)
 		return resp_success(data=data)
 
 	else:

@@ -1,3 +1,4 @@
+//显示用例信息
 var CaseInit = function (caseId) {
 
     function getcaseinfo(){
@@ -29,6 +30,42 @@ var CaseInit = function (caseId) {
     }
     // 调用getProjectList函数
     getcaseinfo(); 
+
+};
+
+
+//获取所有用例列表
+var CaseListInit = function () {
+
+    function getcaseslist(){
+        // 调用用例列表接口
+        $.get("/cases/caseslist/", {}, function (resp) {
+            if(resp.success === "true"){
+                let cases = resp.data.caseslist;
+                let ul =document.getElementById("caseList");  
+
+                for(let i=0;i<cases.length; i++){
+                    let checkBox=document.createElement("input");  
+                    checkBox.setAttribute("type","checkbox");  
+                    checkBox.setAttribute("value",cases[i]['cid']);
+                    checkBox.setAttribute("class",'case_check'); 
+                    checkBox.setAttribute("name",'case_check');   
+                      
+                    let li=document.createElement("li");  
+                    li.appendChild(checkBox);  
+                    li.appendChild(document.createTextNode(cases[i]['c_name']));
+                    ul.appendChild(li);
+                }
+
+            }else{
+                window.alert(resp.message);
+            }
+
+        });
+    }
+    // 调用getcaseslist函数
+    getcaseslist(); 
+    console.log('执行了Caselistinit')
 
 };
     
