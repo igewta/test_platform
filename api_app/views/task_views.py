@@ -39,3 +39,12 @@ def task_del(request,tid):
 	'''删除任务''' 
 	TestTask.objects.get(id=tid).delete()
 	return HttpResponseRedirect('/cases/task/')
+
+@login_required
+def task_run(request,tid):
+	'''运行任务'''
+	if request.method == 'GET':
+		task_obj = TestTask.objects.get(id=tid)
+		return HttpResponseRedirect('/cases/task/')
+	else:
+		return HttpResponse('404 NOT FOUND')

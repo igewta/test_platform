@@ -68,11 +68,27 @@
                   <td>{{ forloop.counter }}</td>
                   <td>{{ task.name }}</td>
                   <td>{{ task.describe }}</td>
-                  <td>{{ task.status }}</td>
+                    {% if task.status == 0 %}
+                    <td>未执行</td>
+                    {% endif %} 
+
+                    {% if task.status == 1 %}
+                    <td>执行中</td>
+                    {% endif %}
+
+                    {% if task.status == 2 %}
+                    <td>已执行</td>
+                    {% endif %}
                   <td>{{ task.cases }}</td> 
                   <td>
-                    <a href="edit/{{ task.id }}/">编辑</a>
-                    <a href="del/{{ task.id }}/">删除</a>
+                    <a href="run/{{ task.id }}/" style="margin-right: 8px;">
+                       <span class="glyphicon glyphicon-play">  </span>
+                    </a>
+                    <a href="edit/{{ task.id }}/" style="margin-right: 8px;">
+                      <span class="glyphicon glyphicon-pencil">  </span>
+                    </a>
+                    <a href="del/{{ task.id }}/">
+                     <span class="glyphicon glyphicon-trash" style="margin-right: 8px;"></span></a>
                   </td>
                 </tr>
                 {% endfor %}

@@ -26,6 +26,7 @@ urlpatterns = [
 	path('task/add/', task_views.task_add),
 	path('task/edit/<int:tid>/',task_views.task_edit),
 	path('task/del/<int:tid>/',task_views.task_del),
+	path('task/run/<int:tid>/',task_views.task_run),
 
 	# task_api
 	path('task/save/',task_api.task_save),
